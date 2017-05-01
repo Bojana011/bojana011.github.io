@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    color: white;
+}
+
+h1 {
+    color: white;
+}
+div {
+    font-size: 15px; font-family: "Courier New", sans-serif;
+}
+
+
+}
+</style>
+</head>
+<body>
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+  <body>
+    <div style="  margin: auto; width: 800px;">
+    <div style="font-size: 60px;">
+
+      HOUR OF INTERESTING PROGRAM
+    </div>
+
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player" style="pointer-events: none;"></div>
+
+
+    <div>
+      Selection of free video content
+
+
+      <style>
+body {
+    background-color: black;
+}
+
+</style>
+    </div>
+  </div>
+
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      var allVideos = [['LUqXQyZVfxA', 435],
+                      ['B1nc2rdaEAw', 562],
+                      ['G2_DwiyNziA', 499],
+                      ['8Snn7yunE8o', 42],
+                      ['kk04kdreX4M', 788],
+                      ['1-sAPjNf6N4', 67],
+                      ['Wo5wP1zU3-c', 665],
+                      ['c5qt_zExNIM', 452],
+                      ['Viz23c8aF4k', 12],
+                      ['v=hvzPPr-EEZs', 8],
+                      ['CynQdfFoMw4', 8],
+                      ['5lAf6KjX7XA', 12],
+                      ['0asYxtDDuiU', 13]
+                    ];
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '600',
+          width: '800',
+          videoId: 'LUqXQyZVfxA',
+
+
+playerVars: {
+            'controls': 0,
+            'fs': 0,
+            'modestbranding': 1,
+            'autoplay': 0,
+            'showinfo': 0,
+            'loop': 1,
+            'playlist': 'LUqXQyZVfxA',
+            'start': 5
+          },
+
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+//        player.loadVideoById("bHQqvYy5KYo", 5, "large");
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        chooseVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.ENDED) {
+          chooseVideo();
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+
+      function chooseVideo() {
+        var currentdate = new Date();
+        var datetime = currentdate.getDate() + "/"+(currentdate.getMonth()+1)
+            + "/" + currentdate.getFullYear() + " @ "
+            + currentdate.getHours() + ":"
+            + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+        var timeseconds = currentdate.getMinutes()*60+currentdate.getSeconds();
+        console.log(timeseconds);
+        var totalTime = 0;
+        var videoID = "";
+        var starttime = 0;
+        for (var i=0; i<allVideos.length; i++) {
+          totalTime = totalTime + allVideos[i][1];
+          if (totalTime > timeseconds) {
+            console.log("found: "+i+" which is "+allVideos[i][0]+" at "+allVideos[i][1]+" with total time "+totalTime);
+            starttime = allVideos[i][1] - (totalTime - timeseconds);
+            videoID = allVideos[i][0];
+            break;
+          }
+        }
+        console.log("loading "+videoID+" at "+starttime)
+        player.loadVideoById(videoID, starttime, "large");
+      }
+
+      //window.setTimeout(function bla() { chooseVideo() }, 3000);
+    </script>
+
+
+  </body>
+</html>
